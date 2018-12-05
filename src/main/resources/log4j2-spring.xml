@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{HH:mm:ss.SSS}]%-5level- %logger{1} %msg%n" />
+        </Console>
+        <RollingFile name="DailyRollingFile" fileName="log/rest.log"
+                     filePattern="log/client%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="[%d{HH:mm:ss.SSS}]%-5level- %logger{1} %msg%n" />
+            <TimeBasedTriggeringPolicy interval="1" />
+            <DefaultRolloverStrategy>
+                <Delete basePath="log/" maxDepth="1">
+                    <IfFileName glob="rest*.log" />
+                    <IfLastModified age="180d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Logger name="mylog" level="trace" additivity="false">
+            <AppenderRef ref="DailyRollingFile" />
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="DailyRollingFile" />
+        </Root>
+    </Loggers>
+</Configuration>

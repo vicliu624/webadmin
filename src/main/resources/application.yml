@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    druid:
+      filters: wall,stat,slf4j
+      poolPreparedStatements: true
+      stat-view-servlet:
+        login-username: admin
+        login-password: admin
+  mvc:
+    static-path-pattern: /static/**
+  profiles:
+    active: development
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 2048MB
+      max-request-size: 4096MB
+      enabled: true
+server:
+  port: 5016
+  session:
+    timeout: 18000
+mybatis:
+  mapper-locations: classpath:/mybatis/**/*Mapper.xml
+pagehelper:
+  support-methods-arguments: true
+  params: pageNum=page
+
+
+logging:
+  level:
+    com.inesanet.ynyt.restful.mapper: DEBUG
+
+--- # 开发配置
+spring:
+  profiles: development
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/ynyt?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
+    username: lwkdba
+    password: Lwk890624~
+  resources:
+    chain:
+      gzipped: true
